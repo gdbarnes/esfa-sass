@@ -7,6 +7,11 @@ class compileSass {
     this.npmPackagesContainer = document.querySelector('.js-npm-packages');
     this.headMarkupContainer = document.querySelector('.js-head-markup');
 
+    // this.prodEnv = true;
+    // this.Url = this.prodEnv
+    //   ? 'https://esfa-sass.herokuapp.com/'
+    //   : 'http://localhost:3000/';
+
     this.sendToGulp = this.sendToGulp.bind(this);
     this.successfulCompile = this.successfulCompile.bind(this);
     this.getComparisonData = this.getComparisonData.bind(this);
@@ -24,7 +29,7 @@ class compileSass {
 
   sendToGulp() {
     console.log('Sending...');
-    fetch('http://localhost:3000/send', {
+    fetch('/send', {
       method: 'POST'
     })
       .then(response => console.log(response))
@@ -34,9 +39,11 @@ class compileSass {
 
   successfulCompile() {
     this.compileSuccessful.innerHTML =
-      'Sass compiled to <a href="http://localhost:3000/css/esfa-govuk-base.css">esfa-govuk-base.css</a>';
+      'Sass compiled to <a href="' +
+      this.liveUrl +
+      '/css/esfa-govuk-base.css">esfa-govuk-base.css</a>';
 
-    fetch('http://localhost:3000/header-markup.html')
+    fetch('/header-markup.html')
       .then(response => response.text())
       .then(htmlCode => {
         console.log(htmlCode);
@@ -45,8 +52,8 @@ class compileSass {
   }
 
   getComparisonData(repo) {
-    const githubToken = '77fbbaaf1c494f5de405d2fa9baa82b0ec9df162';
-    const packageJson = 'http://localhost:3000/root/package.json';
+    const githubToken = '79e92587bc34189bf6539f29e8ec01d7937db51a';
+    const packageJson = '/root/package.json';
     let urls;
     let packagesArr = [];
 
