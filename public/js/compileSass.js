@@ -7,10 +7,10 @@ class compileSass {
     this.npmPackagesContainer = document.querySelector('.js-npm-packages');
     this.headMarkupContainer = document.querySelector('.js-head-markup');
 
-    // this.prodEnv = true;
-    // this.Url = this.prodEnv
-    //   ? 'https://esfa-sass.herokuapp.com/'
-    //   : 'http://localhost:3000/';
+    this.prodEnv = true;
+    this.Url = this.prodEnv
+      ? 'https://esfa-sass.herokuapp.com'
+      : 'http://localhost:3000';
 
     this.sendToGulp = this.sendToGulp.bind(this);
     this.successfulCompile = this.successfulCompile.bind(this);
