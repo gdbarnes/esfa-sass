@@ -12,6 +12,8 @@ app.post('/send', function(req, res) {
   res.send('Styles built');
 });
 
-app.listen(3000, function() {
-  console.log('ESFA Sass compiler: http://localhost:3000/');
+app.set('port', process.env.PORT || 3000);
+
+app.listen(app.get('port'), function() {
+  console.log('ESFA Sass compiler running on port ' + app.get('port'));
 });
