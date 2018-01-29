@@ -52,7 +52,6 @@ class compileSass {
   }
 
   getComparisonData(repo) {
-    const githubToken = '79e92587bc34189bf6539f29e8ec01d7937db51a';
     const packageJson = '/root/package.json';
     let urls;
     let packagesArr = [];
@@ -71,22 +70,16 @@ class compileSass {
       ];
     }
 
-    Promise.all(
-      urls.map(url =>
-        fetch(url, {
-          headers: {
-            Authorization: `token ${githubToken}`
-          }
-        }).then(resp => resp.json())
-      )
-    ).then(versionData => {
-      const githubVersion = atob(versionData[0].content).trim();
-      const localVersion = versionData[1].dependencies[repo]
-        .replace(/^\^+/g, '')
-        .trim();
+    Promise.all(urls.map(url => fetch(url).then(resp => resp.json()))).then(
+      versionData => {
+        const githubVersion = atob(versionData[0].content).trim();
+        const localVersion = versionData[1].dependencies[repo]
+          .replace(/^\^+/g, '')
+          .trim();
 
-      this.displayVersionResults(repo, githubVersion, localVersion);
-    });
+        this.displayVersionResults(repo, githubVersion, localVersion);
+      }
+    );
   }
 
   displayVersionResults(repo, githubVersion, localVersion) {
