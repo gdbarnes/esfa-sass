@@ -45,7 +45,7 @@ class compileSass {
   }
 
   getComparisonData(repo) {
-    const githubToken = '1736008a2ddefcc6a8f216764917ec730c05ec60';
+    const githubToken = '8e06209b7d4305006d749b4f7907e61ccc1e7cef';
     const packageJson = 'http://localhost:3000/root/package.json';
     let urls;
     let packagesArr = [];
