@@ -9,12 +9,19 @@ const buildSass = () => {
     .pipe(
       sass({
         includePaths: [
-          './node_modules/govuk_frontend_toolkit/stylesheets', // 1
-          './node_modules/govuk-elements-sass/public/sass' // 2
+          './node_modules/govuk_frontend_toolkit/stylesheets',
+          './node_modules/govuk-elements-sass/public/sass'
         ]
       }).on('error', sass.logError)
     )
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./assets/stylesheets'))
+    .pipe(
+      sass({
+        outputStyle: 'compressed'
+      })
+    )
+    .on('error', sass.logError)
+    .pipe(gulp.dest('./assets/stylesheets'));
 };
 
 gulp.task('default', buildSass);

@@ -1,0 +1,12 @@
+#content {
+  padding-bottom: 0;
+}
+
+#js-esfa-head-section {
+  padding: 5px;
+}
+
+pre[class*='language-'] {
+  font-size: 14px;
+  border-radius: 0;
+}
