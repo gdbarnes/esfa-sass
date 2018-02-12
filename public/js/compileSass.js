@@ -75,57 +75,54 @@ class compileSass {
 
     // prettier-ignore
     hyperHTML.bind(document.getElementById('js-esfa-head-section'))`
-      <pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
-      &lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
-      &lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
-        &lt;head>
-          &lt;meta charset="utf-8" />
-          &lt;title>ESFA&lt;/title>
+<pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
+&lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
+&lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
+  &lt;head>
+    &lt;meta charset="utf-8" />
+    &lt;title>ESFA&lt;/title>
 
-          &lt;!-- ELEMENTS AND TOOLKIT STYLES - START -->
-          &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.base}?${data.elementsVersion}"/>&lt;!--&lt;![endif]-->
-          &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie6}?${data.elementsVersion}"/>&lt;![endif]-->
-          &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie7}?${data.elementsVersion}"/>&lt;![endif]-->
-          &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie8}?${data.elementsVersion}"/>&lt;![endif]-->
-          &lt;!-- ELEMENTS AND TOOLKIT STYLES - END -->
-          
-          &lt;!-- TEMPLATE STYLES - START -->
-          &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template.css?${data.templateVersion}"/>&lt;!--&lt;![endif]-->
-          &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie6.css?${data.templateVersion}"/>&lt;![endif]-->
-          &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie7.css?${data.templateVersion}"/>&lt;![endif]-->
-          &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie8.css?${data.templateVersion}"/>&lt;![endif]-->
+    &lt;!-- TEMPLATE STYLES - START -->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template.css?${data.templateVersion}"/>&lt;!--&lt;![endif]-->
+    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie6.css?${data.templateVersion}"/>&lt;![endif]-->
+    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie7.css?${data.templateVersion}"/>&lt;![endif]-->
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie8.css?${data.templateVersion}"/>&lt;![endif]-->
+    &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print.css?${data.templateVersion}"/>
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8.css?${data.templateVersion}"/>&lt;![endif]-->
+    &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts.css?${data.templateVersion}"/>&lt;!--&lt;![endif]-->
+    &lt;!-- TEMPLATE STYLES - END -->
 
-          &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print.css?${data.templateVersion}"/>
-          &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8.css?${data.templateVersion}"/>&lt;![endif]-->
-          &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts.css?${data.templateVersion}"/>&lt;!--&lt;![endif]-->
-          &lt;!-- TEMPLATE STYLES - END -->
+    &lt;!--[if lt IE 9]>&lt;script src="${data.cdnUrl}${data.paths.scripts}ie.js?${data.templateVersion}">&lt;/script>&lt;![endif]-->
 
-          &lt;!--[if lt IE 9]>&lt;script src="${data.cdnUrl}${data.paths.scripts}ie.js?${data.templateVersion}">&lt;/script>&lt;![endif]-->
-      
-          &lt;link rel="shortcut icon" href="${data.cdnUrl}${data.paths.images}favicon.ico" type="image/x-icon" />
-          
-          &lt;link rel="mask-icon" href="${data.cdnUrl}${data.paths.images}gov.uk_logotype_crown.svg" color="#0b0c0c">
-          &lt;link rel="apple-touch-icon" sizes="180x180" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-180x180.png">
-          &lt;link rel="apple-touch-icon" sizes="167x167" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-167x167.png">
-          &lt;link rel="apple-touch-icon" sizes="152x152" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-152x152.png">
-          &lt;link rel="apple-touch-icon" href="${data.cdnUrl}${data.paths.images}apple-touch-icon.png">
-      
-          &lt;meta name="theme-color" content="#0b0c0c" />
-      
-          &lt;meta name="viewport" content="width=device-width, initial-scale=1">
-          &lt;meta property="og:image" content="${
-            data.cdnUrl}${data.paths.images}opengraph-image.png">
+    &lt;link rel="shortcut icon" href="${data.cdnUrl}${data.paths.images}favicon.ico" type="image/x-icon" />
+    
+    &lt;link rel="mask-icon" href="${data.cdnUrl}${data.paths.images}gov.uk_logotype_crown.svg" color="#0b0c0c">
+    &lt;link rel="apple-touch-icon" sizes="180x180" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-180x180.png">
+    &lt;link rel="apple-touch-icon" sizes="167x167" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-167x167.png">
+    &lt;link rel="apple-touch-icon" sizes="152x152" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-152x152.png">
+    &lt;link rel="apple-touch-icon" href="${data.cdnUrl}${data.paths.images}apple-touch-icon.png">
 
-        &lt;/head>
-      
-        &lt;body>
-          &lt;script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');&lt;/script>
+    &lt;meta name="theme-color" content="#0b0c0c" />
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1">
+    &lt;meta property="og:image" content="${data.cdnUrl}${data.paths.images}opengraph-image.png">
 
-          &lt;!-- PAGE CONTENT GOES HERE -->
+    &lt;!-- ELEMENTS AND TOOLKIT STYLES - START -->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.base}?${data.elementsVersion}"/>&lt;!--&lt;![endif]-->
+    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie6}?${data.elementsVersion}"/>&lt;![endif]-->
+    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie7}?${data.elementsVersion}"/>&lt;![endif]-->
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie8}?${data.elementsVersion}"/>&lt;![endif]-->
+    &lt;!-- ELEMENTS AND TOOLKIT STYLES - END -->
+  &lt;/head>
 
-          &lt;script src="${data.cdnUrl}${data.paths.scripts}govuk-template.js?${data.templateVersion}">&lt;/script>
-        &lt;/body>    
-      </code></pre>
+  &lt;body>
+    &lt;script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');&lt;/script>
+
+    &lt;!-- PAGE CONTENT GOES HERE -->
+
+    &lt;script src="${data.cdnUrl}${data.paths.scripts}govuk-template.js?${data.templateVersion}">&lt;/script>
+  &lt;/body>
+&lt;/html>
+</code></pre>
     `;
 
     Prism.highlightAll();

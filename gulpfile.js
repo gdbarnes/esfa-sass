@@ -28,6 +28,11 @@ const copyCss = () => {
   return gulp.src(config.srcCss).pipe(gulp.dest(config.outputDir));
 };
 
+/* 
+  TODO
+  Ammend the task above or create a new task which copies accross all of the images and stylesheets!!
+*/
+
 const minCss = () => {
   return gulp
     .src(config.outputDir + '/*.css')
