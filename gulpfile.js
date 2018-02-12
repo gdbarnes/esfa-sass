@@ -2,12 +2,14 @@
 
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-let cleanCSS = require('gulp-clean-css');
+const cleanCSS = require('gulp-clean-css');
+const size = require('gulp-size');
+const rename = require('gulp-rename');
 
 const config = {
   srcSass: './assets/sass/**/*.scss',
-  srcCss: './node_modules/govuk_template_jinja/assets/stylesheets/*.css',
-  outputDir: './public/assets/stylesheets'
+  srcTemplate: './node_modules/govuk_template_jinja/assets/**/*',
+  outputDir: './public/assets'
 };
 
 const buildSass = () => {
@@ -21,27 +23,28 @@ const buildSass = () => {
         ]
       }).on('error', sass.logError)
     )
-    .pipe(gulp.dest(config.outputDir));
+    .pipe(gulp.dest(config.outputDir + '/stylesheets'));
 };
 
-const copyCss = () => {
-  return gulp.src(config.srcCss).pipe(gulp.dest(config.outputDir));
+const copyTemplateAssets = () => {
+  return gulp.src(config.srcTemplate).pipe(gulp.dest(config.outputDir));
 };
-
-/* 
-  TODO
-  Ammend the task above or create a new task which copies accross all of the images and stylesheets!!
-*/
 
 const minCss = () => {
   return gulp
-    .src(config.outputDir + '/*.css')
+    .src(config.outputDir + '/stylesheets/*.css')
     .pipe(cleanCSS({ compatibility: 'ie7' }))
-    .pipe(gulp.dest(config.outputDir + '/minified'));
+    .pipe(size({ title: 'styles' }))
+    .pipe(
+      rename({
+        suffix: '.min'
+      })
+    )
+    .pipe(gulp.dest(config.outputDir + '/stylesheets/minified'));
 };
 
 gulp.task('buildSass', buildSass);
-gulp.task('copyCss', copyCss);
-gulp.task('minCss', ['buildSass', 'copyCss'], minCss);
+gulp.task('copyTemplateAssets', copyTemplateAssets);
+gulp.task('minCss', ['buildSass', 'copyTemplateAssets'], minCss);
 
 gulp.task('default', ['minCss']);
