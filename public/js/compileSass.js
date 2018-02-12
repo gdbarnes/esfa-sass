@@ -3,7 +3,9 @@
 class compileSass {
   constructor() {
     this.compileButton = document.querySelector('.js-compile-sass');
-    this.compileSuccessful = document.querySelector('.js-compile-successful');
+    this.compilationSuccessful = document.querySelector(
+      '.js-compile-successful'
+    );
     this.npmPackagesContainer = document.querySelector('.js-npm-packages');
     this.headMarkupContainer = document.querySelector('.js-head-markup');
 
@@ -11,6 +13,7 @@ class compileSass {
     this.cdnUrl = this.prodEnv
       ? 'https://esfa-sass.herokuapp.com'
       : 'http://localhost:7070';
+    this.cdnStylesPath = '/assets/stylesheets/';
 
     this.sendToGulp = this.sendToGulp.bind(this);
     this.successfulCompile = this.successfulCompile.bind(this);
@@ -19,6 +22,7 @@ class compileSass {
 
     this.getComparisonData('govuk-elements-sass');
     this.getComparisonData('govuk_frontend_toolkit');
+    this.getComparisonData('govuk_template_jinja');
 
     this.addEventListeners();
   }
@@ -33,21 +37,27 @@ class compileSass {
       method: 'POST'
     })
       .then(response => console.log(response))
-      .catch(error => console.error('Error:', error))
+      .catch(error => console.error('Error: ', error))
       .then(response => this.successfulCompile());
   }
 
   successfulCompile() {
-    console.log('Sass compiled.');
-    this.compileSuccessful.innerHTML = 'Sass compiled';
+    const successMessage = `CSS compiled to: <a href="${this.cdnUrl}${
+      this.cdnStylesPath
+    }">${this.cdnUrl}${this.cdnStylesPath}</a> 🎉`;
+    console.log(
+      `%c CSS compiled to: ${this.cdnUrl}${this.cdnStylesPath} 🎉`,
+      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold; font-size: 20px;'
+    );
+    this.compilationSuccessful.innerHTML = successMessage;
     this.showHeadSectionCode();
   }
 
   showHeadSectionCode() {
     const data = {
       cdnUrl: this.cdnUrl,
-      cdnStylesPath: '/css/cdn-minified/',
-      cdnScriptsPath: '/js/cdn-minified/',
+      cdnStylesPath: this.cdnStylesPath,
+      cdnScriptsPath: '/assets/javascripts/',
       stylesheets: {
         base: 'esfa-govuk-base.css',
         ie6: 'esfa-govuk-ie6.css',
@@ -142,6 +152,13 @@ class compileSass {
     if (repo === 'govuk_frontend_toolkit') {
       urls = [
         'https://api.github.com/repos/alphagov/govuk_frontend_toolkit/contents/VERSION.txt',
+        packageJson
+      ];
+    }
+
+    if (repo === 'govuk_template_jinja') {
+      urls = [
+        'https://api.github.com/repos/alphagov/govuk_template_jinja/contents/VERSION',
         packageJson
       ];
     }

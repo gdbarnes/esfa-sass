@@ -2,10 +2,17 @@
 
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+let cleanCSS = require('gulp-clean-css');
+
+const config = {
+  srcSass: './assets/sass/**/*.scss',
+  srcCss: './node_modules/govuk_template_jinja/assets/stylesheets/*.css',
+  outputDir: './public/assets/stylesheets'
+};
 
 const buildSass = () => {
   return gulp
-    .src('./assets/sass/**/*.scss')
+    .src(config.srcSass)
     .pipe(
       sass({
         includePaths: [
@@ -14,15 +21,29 @@ const buildSass = () => {
         ]
       }).on('error', sass.logError)
     )
-    .pipe(gulp.dest('./assets/stylesheets'))
-    .pipe(
-      sass({
-        outputStyle: 'compressed'
-      })
-    )
-    .on('error', sass.logError)
-    .pipe(gulp.dest('./assets/stylesheets'));
+    .pipe(gulp.dest(config.outputDir));
+  // .pipe(
+  //   sass({
+  //     outputStyle: 'compressed'
+  //   })
+  // )
+  // .on('error', sass.logError)
+  // .pipe(gulp.dest(config.outputDir + '/minified'));
 };
 
-gulp.task('default', buildSass);
-gulp.task('build', buildSass);
+const copyCss = () => {
+  return gulp.src(config.srcCss).pipe(gulp.dest(config.outputDir));
+};
+
+const minCss = () => {
+  return gulp
+    .src(config.outputDir + '/*.css')
+    .pipe(cleanCSS({ compatibility: 'ie7' }))
+    .pipe(gulp.dest(config.outputDir + '/minified'));
+};
+
+gulp.task('buildSass', buildSass);
+gulp.task('copyCss', copyCss);
+gulp.task('minCss', ['buildSass', 'copyCss'], minCss);
+
+gulp.task('default', ['buildSass', 'copyCss', 'minCss']);

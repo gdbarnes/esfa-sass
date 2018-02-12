@@ -13,7 +13,7 @@
 // Mixins
 @import 'conditionals'; // Media query mixin
 @import 'device-pixels'; // Retina image mixin
-// @import 'grid_layout'; // Basic grid layout mixin
+@import 'grid_layout'; // Basic grid layout mixin
 @import 'typography'; // Core bold and heading mixins, also external links
 @import 'shims'; // Inline block mixin, clearfix placeholder
 
@@ -39,7 +39,7 @@
 // Base (unclassed HTML elements)
 // These are predefined by govuk_template
 // If you're not using govuk_template, uncomment the line below.
-@import 'elements/govuk-template-base'; // Base styles set by GOV.UK template
+// @import 'elements/govuk-template-base'; // Base styles set by GOV.UK template
 
 // Objects (unstyled design patterns)
 @import 'elements/layout'; // Main content container. Grid layout - rows and column widths
