@@ -44,11 +44,11 @@ class compileSass {
   }
 
   successfulCompile() {
-    const successMessage = `CSS compiled to: <a href="${this.cdnUrl}${
-      this.cdnStylesPath
-    }">${this.cdnUrl}${this.cdnStylesPath}</a> 🎉`;
+    const successMessage = `Assets compiled to: <a href="${
+      this.cdnUrl
+    }/assets/">${this.cdnUrl}/assets/</a>`;
     console.log(
-      `%c CSS compiled to: ${this.cdnUrl}${this.cdnStylesPath} 🎉`,
+      `%c Assets compiled to: ${this.cdnUrl}/assets/ 🎉`,
       'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold; font-size: 20px;'
     );
     this.compilationSuccessful.innerHTML = successMessage;
@@ -173,8 +173,8 @@ class compileSass {
     npmLink.innerHTML = repo;
     const result =
       githubVersion === localVersion
-        ? ` ✅  Up to date (Current verison is: ${githubVersion})`
-        : ` ❌ Needs updating (Current verison is: ${githubVersion} and the local verison is: ${localVersion})`;
+        ? ` ✅ Local version up to date (${githubVersion})`
+        : ` ❌ Needs updating (Current GitHub verison is: ${githubVersion} and the local verison is: ${localVersion})`;
     const versionText = document.createTextNode(result);
     listItem.appendChild(npmLink);
     listItem.appendChild(versionText);
