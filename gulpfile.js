@@ -22,13 +22,6 @@ const buildSass = () => {
       }).on('error', sass.logError)
     )
     .pipe(gulp.dest(config.outputDir));
-  // .pipe(
-  //   sass({
-  //     outputStyle: 'compressed'
-  //   })
-  // )
-  // .on('error', sass.logError)
-  // .pipe(gulp.dest(config.outputDir + '/minified'));
 };
 
 const copyCss = () => {
@@ -46,4 +39,4 @@ gulp.task('buildSass', buildSass);
 gulp.task('copyCss', copyCss);
 gulp.task('minCss', ['buildSass', 'copyCss'], minCss);
 
-gulp.task('default', ['buildSass', 'copyCss', 'minCss']);
+gulp.task('default', ['minCss']);
