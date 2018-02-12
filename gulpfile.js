@@ -12,7 +12,7 @@ const config = {
   outputDir: './public/assets'
 };
 
-const buildSass = () => {
+const compileSass = () => {
   return gulp
     .src(config.srcSass)
     .pipe(
@@ -23,28 +23,50 @@ const buildSass = () => {
         ]
       }).on('error', sass.logError)
     )
+    .pipe(
+      size({
+        showFiles: true,
+        title: 'Compiled Sass: '
+      })
+    )
     .pipe(gulp.dest(config.outputDir + '/stylesheets'));
+  // .pipe(notify({ message: 'SASS COMPILATION COMPLETE 🎁' }));
 };
 
 const copyTemplateAssets = () => {
-  return gulp.src(config.srcTemplate).pipe(gulp.dest(config.outputDir));
+  return gulp
+    .src(config.srcTemplate)
+    .pipe(
+      size({
+        showFiles: true,
+        title: 'Template assets:'
+      })
+    )
+    .pipe(gulp.dest(config.outputDir));
+  // .pipe(notify({ message: 'TEMPLATE ASSETS COPIED 👯‍' }));
 };
 
-const minCss = () => {
+const minifyCss = () => {
   return gulp
     .src(config.outputDir + '/stylesheets/*.css')
     .pipe(cleanCSS({ compatibility: 'ie7' }))
-    .pipe(size({ title: 'styles' }))
     .pipe(
       rename({
         suffix: '.min'
       })
     )
+    .pipe(
+      size({
+        showFiles: true,
+        title: 'Minified css: '
+      })
+    )
     .pipe(gulp.dest(config.outputDir + '/stylesheets/minified'));
+  // .pipe(notify({ message: 'CSS FILES MINIFIED 🗜' }));
 };
 
-gulp.task('buildSass', buildSass);
-gulp.task('copyTemplateAssets', copyTemplateAssets);
-gulp.task('minCss', ['buildSass', 'copyTemplateAssets'], minCss);
+gulp.task('compileSass', compileSass);
+gulp.task('copyTemplateAssets', ['compileSass'], copyTemplateAssets); // wait for compileSass to finish
+gulp.task('minifyCss', ['copyTemplateAssets'], minifyCss); // wait for copyTemplateAssets to finish
 
-gulp.task('default', ['minCss']);
+gulp.task('default', ['minifyCss']);

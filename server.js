@@ -14,7 +14,7 @@ app.use(
 app.use('/root', express.static(__dirname));
 
 app.post('/send', function(req, res) {
-  console.log('Gulp tasks started 🥤...');
+  console.log('\nGulp tasks started 🥤 🥤 🥤....\n');
   exec('gulp', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error} ❌`);
@@ -27,7 +27,7 @@ app.post('/send', function(req, res) {
     }
 
     console.log(stdout);
-    console.log('...Gulp tasks complete ✅ ');
+    console.log('...Gulp tasks complete ✅');
   });
   res.send('<h1>Styles built :)</h1>');
 });
