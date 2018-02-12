@@ -83,10 +83,10 @@ class compileSass {
     &lt;title>ESFA&lt;/title>
 
     &lt;!-- TEMPLATE STYLES - START -->
-    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
-    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie6.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie7.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="{data.cdnUrl}${data.paths.styles}govuk-template-ie8.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
+    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie6.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie7.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie8.css?${data.templateVersion}" />&lt;![endif]-->
     &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print.css?${data.templateVersion}" />
     &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8.css?${data.templateVersion}" />&lt;![endif]-->
     &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
