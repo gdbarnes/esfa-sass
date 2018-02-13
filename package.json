@@ -4,7 +4,8 @@
   "description": "Sass compiled using govuk-elements-sass",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sync":
+      "node server & browser-sync start --proxy 'localhost:7070' --files '**/*.css, **/*.html, **/*.js, !node_modules/**/*' --browser 'google chrome'"
   },
   "author": "",
   "license": "ISC",
@@ -20,5 +21,7 @@
     "gulp-size": "^3.0.0",
     "serve-index": "^1.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "browser-sync": "^2.23.6"
+  }
 }

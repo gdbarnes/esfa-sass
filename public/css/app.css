@@ -1,3 +1,22 @@
+:root {
+  --black: #272727;
+}
+
+html {
+  /* box-sizing: border-box; */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-weight: 900;
+  font-size: 10px;
+  color: var(--black);
+}
+
+/* *,
+*:before,
+*:after {
+  box-sizing: inherit;
+} */
+
 #content {
   padding-bottom: 0;
 }
@@ -11,6 +30,66 @@ pre[class*='language-'] {
   border-radius: 0;
 }
 
+.npm-packages * {
+  box-sizing: border-box;
+}
+
+.npm-packages {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
+}
+
+.npm-package {
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+  background: lightgray;
+}
+
+.package-status {
+  font-weight: 600;
+}
+
+.package-current {
+  background: #e9fdd5;
+  border: 5px solid #00823b;
+}
+.package-old {
+  background: #ffe8e8;
+  border: 5px solid crimson;
+}
+
+.npm-link {
+  word-break: break-all;
+  font-weight: bold;
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+}
+
+.npm-link a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.npm-link a:hover {
+  text-decoration: underline;
+  text-decoration-skip: ink;
+}
+
+.local-version,
+.github-version {
+  text-align: right;
+  margin-bottom: 0;
+  font-size: 1.4rem;
+}
+
+@media (min-width: 641px) {
+  .npm-packages {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 /* 
 
 TODO

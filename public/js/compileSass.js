@@ -7,7 +7,8 @@ class compileSass {
       '.js-compile-successful'
     );
     this.npmPackagesContainer = document.querySelector('.js-npm-packages');
-    this.headMarkupContainer = document.querySelector('.js-head-markup');
+    this.esfaMarkupContainer = document.querySelector('.js-esfa-markup');
+    // this.filePathsSelection = document.querySelector('.generator-options');
 
     this.packageJson = '/root/package.json';
     this.prodEnv = false;
@@ -44,9 +45,8 @@ class compileSass {
   }
 
   successfulCompile() {
-    const successMessage = `Assets compiled to: <a href="${
-      this.cdnUrl
-    }/assets/">${this.cdnUrl}/assets/</a>`;
+    // prettier-ignore
+    const successMessage = `Assets compiled to: <a href="${this.cdnUrl}/assets/">${this.cdnUrl}/assets/</a>`;
     console.log(
       `%c Assets compiled to: ${this.cdnUrl}/assets/ 🎉`,
       'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold; font-size: 20px;'
@@ -74,7 +74,7 @@ class compileSass {
     };
 
     // prettier-ignore
-    hyperHTML.bind(document.getElementById('js-esfa-head-section'))`
+    hyperHTML.bind(this.esfaMarkupContainer)`
 <pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
 &lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
 &lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
@@ -152,6 +152,17 @@ class compileSass {
         this.packageJson
       ];
     }
+    // if (repo === 'govuk-elements-sass') {
+    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
+    // }
+
+    // if (repo === 'govuk_frontend_toolkit') {
+    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
+    // }
+
+    // if (repo === 'govuk_template_jinja') {
+    //   urls = ['/root/git_ignored/VERSION', this.packageJson];
+    // }
 
     Promise.all(urls.map(url => fetch(url).then(resp => resp.json()))).then(
       versionData => {
@@ -167,24 +178,27 @@ class compileSass {
   }
 
   displayVersionResults(repo, githubVersion, localVersion) {
+    const npmLink = `https://www.npmjs.com/package/${repo}`;
+    const upToDate = githubVersion === localVersion;
     const listItem = document.createElement('LI');
-    const npmLink = document.createElement('A');
-    npmLink.setAttribute('href', 'https://www.npmjs.com/package/' + repo);
-    npmLink.innerHTML = repo;
-    const result =
-      githubVersion === localVersion
-        ? ` ✅ Local version up to date (${githubVersion})`
-        : ` ❌ Needs updating (Current GitHub verison is: ${githubVersion} and the local verison is: ${localVersion})`;
-    const versionText = document.createTextNode(result);
-    listItem.appendChild(npmLink);
-    listItem.appendChild(versionText);
+    listItem.classList.add(
+      'npm-package',
+      upToDate ? 'package-current' : 'package-old'
+    );
+    hyperHTML.bind(listItem)`
+        <h2 class="npm-link"><a href=${npmLink}>${repo}</a></h2>
+        <p class="package-status">
+        ${
+          upToDate
+            ? 'Local version is up to date'
+            : '❗️ Package needs updating❗️'
+        }
+        </p>
+        <p class="local-version">Local version: ${localVersion}</p>
+        <p class="github-version">GitHub version: ${githubVersion}</p>
+    `;
     this.npmPackagesContainer.appendChild(listItem);
-    return localVersion;
   }
 }
 
 new compileSass();
-
-{
-  /* <a href="https://www.npmjs.com/package/${repo}">${repo}</a>; */
-}

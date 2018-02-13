@@ -4,7 +4,7 @@ This app will generate the necessary assets and provide markup to be used in ESF
 
 Once available this app will be expanded to publish assets to the ESFA CDN.
 
-### Project uses
+## Uses
 
 * express 4.x
 * gulp 3.x
@@ -12,11 +12,16 @@ Once available this app will be expanded to publish assets to the ESFA CDN.
 * govuk_frontend_toolkit
 * govuk_template_jinja
 
-### To run locally
+## Local setup
 
-* npm install
-* npm start
+1. Clone repository (https://github.com/gdbarnes/esfa-chat-app.git)
+2. `npm install`
+3. `npm start`
+4. Visit http://localhost:7070
+5. 🎉
 
-### App running on Heroku
+## Demo
 
-https://esfa-sass.herokuapp.com/
+Running on Heroku: https://esfa-sass.herokuapp.com/
+
+This version is built directly from this repository.

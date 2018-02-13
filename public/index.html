@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <title>ESFA HTML generator</title>
   <link href="vendor/prism.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://govuk-elements.herokuapp.com/public/stylesheets/govuk-elements-styles.css">
   <link rel="stylesheet" href="/css/app.css">
@@ -10,16 +11,38 @@
 <body>
 
   <main id="content">
-    <h1 class="heading-large">ESFA HTML template</h1>
+    <h1 class="heading-large">ESFA HTML generator</h1>
     <hr />
     <p>This app will generate the necessary assets and provide consistent markup to be used in ESFA projects.</p>
     <p>Once a CDN is available, this app will be used to generate the assets to be published.</p>
     <p>It uses the npm packages listed below locally and compares their version numbers with the relevant GitHub repositories.</p>
-    <ul class="list list-bullet js-npm-packages"></ul>
-    <button class="button button-start js-compile-sass">Generate files and markup</button>
+    <ul class="npm-packages js-npm-packages"></ul>
+    <!-- <div class="generator-options">
+      <div class="form-group">
+        <fieldset class="inline">
+          <legend>
+            <h2 class="heading-small">
+              Generated file paths
+            </h2>
+          </legend>
+
+          <div class="multiple-choice">
+            <input id="cdn-paths" type="radio" name="paths-radio-inline-group" value="cdn" checked>
+            <label for="cdn-paths">CDN (https://www.esfa-cdn.com/)</label>
+          </div>
+          <div class="multiple-choice">
+            <input id="absolute-paths" type="radio" name="paths-radio-inline-group" value="absolute">
+            <label for="absolute-paths">Absolute</label>
+          </div>
+
+        </fieldset>
+      </div>
+    </div> -->
+    <button type="button" class="button button-start js-compile-sass">Generate files and markup</button>
+
     <h3 class="heading-small js-compile-successful"></h3>
+    <div class="js-esfa-markup"></div>
   </main>
-  <div id="js-esfa-head-section"></div>
 
 </body>
 <script src="vendor/hyperhtml.js"></script>
