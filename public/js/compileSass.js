@@ -11,11 +11,11 @@ class compileSass {
     // this.filePathsSelection = document.querySelector('.generator-options');
 
     this.packageJson = '/root/package.json';
+    this.cdnUrl = 'https://www.esfa-cdn.com/';
     this.prodEnv = false;
-    this.cdnUrl = this.prodEnv
+    this.envUrl = this.prodEnv
       ? 'https://esfa-sass.herokuapp.com'
       : 'http://localhost:7070';
-    this.cdnStylesPath = '/assets/stylesheets/';
     this.versionDetails = {};
 
     this.sendToGulp = this.sendToGulp.bind(this);
@@ -35,46 +35,54 @@ class compileSass {
   }
 
   sendToGulp() {
-    console.log('Sending...');
+    console.log(
+      '%c Starting Gulp tasks... 🥤',
+      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
+    );
     fetch('/send', {
       method: 'POST'
     })
-      .then(response => console.log(response))
       .catch(error => console.error('Error: ', error))
       .then(response => this.successfulCompile());
   }
 
   successfulCompile() {
     // prettier-ignore
-    const successMessage = `Assets compiled to: <a href="${this.cdnUrl}/assets/">${this.cdnUrl}/assets/</a>`;
+    const successMessage = `Assets compiled to: <a href="${this.envUrl}/assets/">${this.envUrl}/assets/</a>`;
     console.log(
-      `%c Assets compiled to: ${this.cdnUrl}/assets/ 🎉`,
-      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold; font-size: 20px;'
+      `%c Assets compiled to: ${this.envUrl}/assets/ 🎉`,
+      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
     );
     this.compilationSuccessful.innerHTML = successMessage;
     this.showHeadSectionCode();
   }
 
   showHeadSectionCode() {
+    /* Form options */
+    const minifiedStyles = document.getElementsByName('minify-css')[0].checked;
+    const chosenPath = Array.from(
+      document.getElementsByName('paths-radio-group')
+    ).filter(radio => radio.checked)[0].value;
+
     const data = {
-      cdnUrl: this.cdnUrl,
+      cdnUrl: chosenPath === 'cdn' ? this.cdnUrl : '',
       paths: {
-        styles: this.cdnStylesPath,
+        styles: minifiedStyles
+          ? '/assets/stylesheets/minified/'
+          : '/assets/stylesheets/',
         scripts: '/assets/javascripts/',
         images: '/assets/images/'
       },
-      stylesheets: {
-        base: 'esfa-govuk-base.css',
-        ie6: 'esfa-govuk-ie6.css',
-        ie7: 'esfa-govuk-ie7.css',
-        ie8: 'esfa-govuk-ie8.css'
-      },
+      minifiedSuffix: minifiedStyles ? '.min' : '',
       templateVersion: this.versionDetails['govuk_template_jinja'],
       elementsVersion: this.versionDetails['govuk-elements-sass']
     };
+    // console.log(data);
+    // &lth1>${console.log(data)}&lt/h1>
+    // ${hyperHTML.wire(data)`&lth1>${console.log(data)}&lt/h1>`}
 
     // prettier-ignore
-    hyperHTML.bind(this.esfaMarkupContainer)`
+    hyperHTML.bind(this.esfaMarkupContainer)`${hyperHTML.wire(data)`
 <pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
 &lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
 &lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
@@ -83,13 +91,13 @@ class compileSass {
     &lt;title>ESFA&lt;/title>
 
     &lt;!-- TEMPLATE STYLES - START -->
-    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
-    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie6.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie7.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie8.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print.css?${data.templateVersion}" />
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
+    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie6${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie7${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print${data.minifiedSuffix}.css?${data.templateVersion}" />
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+    &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
     &lt;!-- TEMPLATE STYLES - END -->
 
     &lt;!--[if lt IE 9]>&lt;script src="${data.cdnUrl}${data.paths.scripts}ie.js?${data.templateVersion}">&lt;/script>&lt;![endif]-->
@@ -107,10 +115,10 @@ class compileSass {
     &lt;meta property="og:image" content="${data.cdnUrl}${data.paths.images}opengraph-image.png">
 
     &lt;!-- ELEMENTS AND TOOLKIT STYLES - START -->
-    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.base}?${data.elementsVersion}" />&lt;!--&lt;![endif]-->
-    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie6}?${data.elementsVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie7}?${data.elementsVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}${data.stylesheets.ie8}?${data.elementsVersion}" />&lt;![endif]-->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-base${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;!--&lt;![endif]-->
+    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-ie6${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-ie7${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;![endif]-->
+    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-ie8${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;![endif]-->
     &lt;!-- ELEMENTS AND TOOLKIT STYLES - END -->
   &lt;/head>
 
@@ -123,7 +131,7 @@ class compileSass {
   &lt;/body>
 &lt;/html>
 </code></pre>
-    `;
+    `}`;
 
     Prism.highlightAll();
   }
@@ -132,37 +140,35 @@ class compileSass {
     let urls;
     let packagesArr = [];
 
+    // if (repo === 'govuk-elements-sass') {
+    //   urls = [
+    //     'https://api.github.com/repos/alphagov/govuk_elements/contents/packages/govuk-elements-sass/VERSION.txt',
+    //     this.packageJson
+    //   ];
+    // }
+    // if (repo === 'govuk_frontend_toolkit') {
+    //   urls = [
+    //     'https://api.github.com/repos/alphagov/govuk_frontend_toolkit/contents/VERSION.txt',
+    //     this.packageJson
+    //   ];
+    // }
+    // if (repo === 'govuk_template_jinja') {
+    //   urls = [
+    //     'https://api.github.com/repos/alphagov/govuk_template_jinja/contents/VERSION',
+    //     this.packageJson
+    //   ];
+    // }
     if (repo === 'govuk-elements-sass') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_elements/contents/packages/govuk-elements-sass/VERSION.txt',
-        this.packageJson
-      ];
+      urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
     }
 
     if (repo === 'govuk_frontend_toolkit') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_frontend_toolkit/contents/VERSION.txt',
-        this.packageJson
-      ];
+      urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
     }
 
     if (repo === 'govuk_template_jinja') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_template_jinja/contents/VERSION',
-        this.packageJson
-      ];
+      urls = ['/root/git_ignored/VERSION', this.packageJson];
     }
-    // if (repo === 'govuk-elements-sass') {
-    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
-    // }
-
-    // if (repo === 'govuk_frontend_toolkit') {
-    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
-    // }
-
-    // if (repo === 'govuk_template_jinja') {
-    //   urls = ['/root/git_ignored/VERSION', this.packageJson];
-    // }
 
     Promise.all(urls.map(url => fetch(url).then(resp => resp.json()))).then(
       versionData => {
@@ -191,7 +197,7 @@ class compileSass {
         ${
           upToDate
             ? 'Local version is up to date'
-            : '❗️ Package needs updating❗️'
+            : 'Package needs updating❗️️️️️️️️️️️'
         }
         </p>
         <p class="local-version">Local version: ${localVersion}</p>

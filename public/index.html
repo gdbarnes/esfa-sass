@@ -17,27 +17,37 @@
     <p>Once a CDN is available, this app will be used to generate the assets to be published.</p>
     <p>It uses the npm packages listed below locally and compares their version numbers with the relevant GitHub repositories.</p>
     <ul class="npm-packages js-npm-packages"></ul>
-    <!-- <div class="generator-options">
+    <div class="generator-options">
       <div class="form-group">
         <fieldset class="inline">
           <legend>
             <h2 class="heading-small">
-              Generated file paths
+              File paths
             </h2>
           </legend>
 
           <div class="multiple-choice">
-            <input id="cdn-paths" type="radio" name="paths-radio-inline-group" value="cdn" checked>
+            <input id="cdn-paths" type="radio" name="paths-radio-group" value="cdn" checked>
             <label for="cdn-paths">CDN (https://www.esfa-cdn.com/)</label>
           </div>
           <div class="multiple-choice">
-            <input id="absolute-paths" type="radio" name="paths-radio-inline-group" value="absolute">
-            <label for="absolute-paths">Absolute</label>
+            <input id="absolute-paths" type="radio" name="paths-radio-group" value="absolute">
+            <label for="absolute-paths">Absolute (/)</label>
           </div>
-
         </fieldset>
       </div>
-    </div> -->
+      <div class="form-group">
+        <legend>
+          <h2 class="heading-small">
+            Minification
+          </h2>
+        </legend>
+        <div class="multiple-choice">
+          <input id="checkbox-minify-css" name="minify-css" type="checkbox" value="false">
+          <label for="checkbox-minify-css">Use minified CSS</label>
+        </div>
+      </div>
+    </div>
     <button type="button" class="button button-start js-compile-sass">Generate files and markup</button>
 
     <h3 class="heading-small js-compile-successful"></h3>
