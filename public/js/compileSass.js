@@ -3,12 +3,12 @@
 class compileSass {
   constructor() {
     this.compileButton = document.querySelector('.js-compile-sass');
+    this.createArchiveButton = document.querySelector('.js-create-zip');
     this.compilationSuccessful = document.querySelector(
       '.js-compile-successful'
     );
     this.npmPackagesContainer = document.querySelector('.js-npm-packages');
     this.esfaMarkupContainer = document.querySelector('.js-esfa-markup');
-    // this.filePathsSelection = document.querySelector('.generator-options');
 
     this.packageJson = '/root/package.json';
     this.cdnUrl = 'https://www.esfa-cdn.com/';
@@ -22,6 +22,8 @@ class compileSass {
     this.successfulCompile = this.successfulCompile.bind(this);
     this.getComparisonData = this.getComparisonData.bind(this);
     this.displayVersionResults = this.displayVersionResults.bind(this);
+    this.createArchive = this.createArchive.bind(this);
+    this.showDownloadLink = this.showDownloadLink.bind(this);
 
     this.getComparisonData('govuk-elements-sass');
     this.getComparisonData('govuk_frontend_toolkit');
@@ -32,6 +34,7 @@ class compileSass {
 
   addEventListeners() {
     this.compileButton.addEventListener('click', this.sendToGulp);
+    this.createArchiveButton.addEventListener('click', this.createArchive);
   }
 
   sendToGulp() {
@@ -39,7 +42,7 @@ class compileSass {
       '%c Starting Gulp tasks... 🥤',
       'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
     );
-    fetch('/send', {
+    fetch('/gulp', {
       method: 'POST'
     })
       .catch(error => console.error('Error: ', error))
@@ -83,25 +86,25 @@ class compileSass {
 
     // prettier-ignore
     hyperHTML.bind(this.esfaMarkupContainer)`${hyperHTML.wire(data)`
-<pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
-&lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
-&lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
+    <pre><code class="language-markup js-head-markup">&lt;!DOCTYPE html>
+    &lt;!--[if lt IE 9]>&lt;html class="lte-ie8" lang="en">&lt;![endif]-->
+    &lt;!--[if gt IE 8]>&lt;!-->&lt;html lang="en">&lt;!--&lt;![endif]-->
   &lt;head>
-    &lt;meta charset="utf-8" />
-    &lt;title>ESFA&lt;/title>
+  &lt;meta charset="utf-8" />
+  &lt;title>ESFA&lt;/title>
+  
+  &lt;!-- TEMPLATE STYLES - START -->
+  &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
+  &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie6${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+  &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie7${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+  &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+  &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print${data.minifiedSuffix}.css?${data.templateVersion}" />
+  &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
+  &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
+  &lt;!-- TEMPLATE STYLES - END -->
 
-    &lt;!-- TEMPLATE STYLES - START -->
-    &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
-    &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie6${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 7]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie7${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}govuk-template-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;link rel="stylesheet" media="print" href="${data.cdnUrl}${data.paths.styles}govuk-template-print${data.minifiedSuffix}.css?${data.templateVersion}" />
-    &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts-ie8${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;![endif]-->
-    &lt;!--[if gte IE 9]>&lt;!-->&lt;link rel="stylesheet" media="all" href="${data.cdnUrl}${data.paths.styles}fonts${data.minifiedSuffix}.css?${data.templateVersion}" />&lt;!--&lt;![endif]-->
-    &lt;!-- TEMPLATE STYLES - END -->
-
-    &lt;!--[if lt IE 9]>&lt;script src="${data.cdnUrl}${data.paths.scripts}ie.js?${data.templateVersion}">&lt;/script>&lt;![endif]-->
-
+  &lt;!--[if lt IE 9]>&lt;script src="${data.cdnUrl}${data.paths.scripts}ie.js?${data.templateVersion}">&lt;/script>&lt;![endif]-->
+  
     &lt;link rel="shortcut icon" href="${data.cdnUrl}${data.paths.images}favicon.ico" type="image/x-icon" />
     
     &lt;link rel="mask-icon" href="${data.cdnUrl}${data.paths.images}gov.uk_logotype_crown.svg" color="#0b0c0c">
@@ -109,11 +112,11 @@ class compileSass {
     &lt;link rel="apple-touch-icon" sizes="167x167" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-167x167.png">
     &lt;link rel="apple-touch-icon" sizes="152x152" href="${data.cdnUrl}${data.paths.images}apple-touch-icon-152x152.png">
     &lt;link rel="apple-touch-icon" href="${data.cdnUrl}${data.paths.images}apple-touch-icon.png">
-
+    
     &lt;meta name="theme-color" content="#0b0c0c" />
     &lt;meta name="viewport" content="width=device-width, initial-scale=1">
     &lt;meta property="og:image" content="${data.cdnUrl}${data.paths.images}opengraph-image.png">
-
+    
     &lt;!-- ELEMENTS AND TOOLKIT STYLES - START -->
     &lt;!--[if gt IE 8]>&lt;!-->&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-base${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;!--&lt;![endif]-->
     &lt;!--[if IE 6]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-ie6${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;![endif]-->
@@ -121,19 +124,40 @@ class compileSass {
     &lt;!--[if IE 8]>&lt;link rel="stylesheet" media="screen" href="${data.cdnUrl}${data.paths.styles}esfa-govuk-ie8${data.minifiedSuffix}.css?${data.elementsVersion}" />&lt;![endif]-->
     &lt;!-- ELEMENTS AND TOOLKIT STYLES - END -->
   &lt;/head>
-
+  
   &lt;body>
     &lt;script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');&lt;/script>
-
+    
     &lt;!-- PAGE CONTENT GOES HERE -->
-
+    
     &lt;script src="${data.cdnUrl}${data.paths.scripts}govuk-template.js?${data.templateVersion}">&lt;/script>
-  &lt;/body>
-&lt;/html>
-</code></pre>
+    &lt;/body>
+    &lt;/html>
+    </code></pre>
     `}`;
 
     Prism.highlightAll();
+  }
+
+  createArchive() {
+    console.log(
+      '%c Creating zip... 🗜',
+      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
+    );
+    fetch('/create-zip', {
+      method: 'POST'
+    })
+      .then(response => this.showDownloadLink())
+      .catch(error => console.error('Error: ', error));
+  }
+
+  showDownloadLink() {
+    console.log(
+      `%c Archive saved to: ${
+        this.envUrl
+      }/public/downloads/esfa-govuk-assets.zip`,
+      'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
+    );
   }
 
   getComparisonData(repo) {

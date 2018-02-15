@@ -4,12 +4,12 @@
   "description": "Sass compiled using govuk-elements-sass",
   "main": "index.js",
   "scripts": {
-    "sync":
-      "node server & browser-sync start --proxy 'localhost:7070' --files '**/*.css, **/*.html, **/*.js, !node_modules/**/*' --browser 'google chrome'"
+    "sync": "node server & browser-sync start --proxy 'localhost:7070' --files '**/*.css, **/*.html, **/*.js, !node_modules/**/*' --browser 'google chrome'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^2.1.1",
     "express": "^4.16.2",
     "govuk-elements-sass": "^3.1.2",
     "govuk_frontend_toolkit": "^7.3.0",

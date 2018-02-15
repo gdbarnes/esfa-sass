@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const exec = require('child_process').exec;
-var serveIndex = require('serve-index');
+const serveIndex = require('serve-index');
+const gulpTasks = require('./routes/gulp-tasks');
+const download = require('./routes/download');
 
 app.use(express.static('public'));
-
-// shows a list of files in this folder
+// serveIndex allows user to use browser to view files in this folder
 app.use(
   '/assets',
   serveIndex(__dirname + '/public/assets', { icons: true, view: 'details' })
@@ -13,24 +13,9 @@ app.use(
 
 app.use('/root', express.static(__dirname));
 
-app.post('/send', function(req, res) {
-  console.log('\nGulp tasks started 🥤 🥤 🥤....\n');
-  exec('gulp', (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error} ❌`);
-      return;
-    }
-
-    if (stderr) {
-      console.error(`exec stderr: ${stderr} ❌`);
-      return;
-    }
-
-    console.log(stdout);
-    console.log('...Gulp tasks complete ✅');
-  });
-  res.send('<h1>Styles built :)</h1>');
-});
+app.post('/gulp', gulpTasks.gulp);
+app.post('/create-zip', download.zip);
+app.get('/download', download.download);
 
 app.set('port', process.env.PORT || 7070);
 
