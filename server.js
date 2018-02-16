@@ -6,16 +6,13 @@ const download = require('./routes/download');
 
 app.use(express.static('public'));
 // serveIndex allows user to use browser to view files in this folder
-app.use(
-  '/assets',
-  serveIndex(__dirname + '/public/assets', { icons: true, view: 'details' })
-);
+app.use('/assets', serveIndex(__dirname + '/public/assets', { icons: true, view: 'details' }));
 
 app.use('/root', express.static(__dirname));
 
 app.post('/gulp', gulpTasks.gulp);
 app.post('/create-zip', download.zip);
-app.get('/download', download.download);
+// app.post('/download', download.download);
 
 app.set('port', process.env.PORT || 7070);
 

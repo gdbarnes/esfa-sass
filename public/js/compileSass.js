@@ -189,47 +189,50 @@ class compileSass {
   }
 
   showDownloadLink() {
+    const downloadPath = `${this.envUrl}/downloads/assets.zip`;
     console.log(
-      `%c Archive saved: ${this.envUrl}/download`,
+      `%c Archive saved: ${downloadPath}`,
       'color: forestgreen; font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; font-weight: bold;'
     );
-    this.zipSuccessful.innerHTML =
-      '<h3 class="heading-small">Archive generated. Place the content in the web root of your project.</h3><p><a class="button" href="/download">Download assets.zip</a></p>';
+    this.zipSuccessful.innerHTML = `<h3 class="heading-small">Archive generated. Unzip the contents to the web root of your project.</h3><p><a class="button" href="${downloadPath}">Download assets.zip</a></p>`;
   }
 
   getComparisonData(repo) {
     let urls;
     let packagesArr = [];
 
-    if (repo === 'govuk-elements-sass') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_elements/contents/packages/govuk-elements-sass/VERSION.txt',
-        this.packageJson
-      ];
-    }
-    if (repo === 'govuk_frontend_toolkit') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_frontend_toolkit/contents/VERSION.txt',
-        this.packageJson
-      ];
-    }
-    if (repo === 'govuk_template_jinja') {
-      urls = [
-        'https://api.github.com/repos/alphagov/govuk_template_jinja/contents/VERSION',
-        this.packageJson
-      ];
-    }
-    // if (repo === 'govuk-elements-sass') {
-    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
-    // }
+    if (this.prodEnv) {
+      if (repo === 'govuk-elements-sass') {
+        urls = [
+          'https://api.github.com/repos/alphagov/govuk_elements/contents/packages/govuk-elements-sass/VERSION.txt',
+          this.packageJson
+        ];
+      }
+      if (repo === 'govuk_frontend_toolkit') {
+        urls = [
+          'https://api.github.com/repos/alphagov/govuk_frontend_toolkit/contents/VERSION.txt',
+          this.packageJson
+        ];
+      }
+      if (repo === 'govuk_template_jinja') {
+        urls = [
+          'https://api.github.com/repos/alphagov/govuk_template_jinja/contents/VERSION',
+          this.packageJson
+        ];
+      }
+    } else {
+      if (repo === 'govuk-elements-sass') {
+        urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
+      }
 
-    // if (repo === 'govuk_frontend_toolkit') {
-    //   urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
-    // }
+      if (repo === 'govuk_frontend_toolkit') {
+        urls = ['/root/git_ignored/VERSION.txt', this.packageJson];
+      }
 
-    // if (repo === 'govuk_template_jinja') {
-    //   urls = ['/root/git_ignored/VERSION', this.packageJson];
-    // }
+      if (repo === 'govuk_template_jinja') {
+        urls = ['/root/git_ignored/VERSION', this.packageJson];
+      }
+    }
 
     Promise.all(urls.map(url => fetch(url).then(resp => resp.json()))).then(versionData => {
       const githubVersion = atob(versionData[0].content).trim();

@@ -40,7 +40,7 @@ exports.zip = (req, res) => {
   res.send('<h1>Archive created.</h1>');
 };
 
-exports.download = (req, res) => {
-  console.log('Downloading');
-  res.download(downloadFilePath);
-};
+// exports.download = (req, res) => {
+//   console.log('Downloading');
+//   res.download(downloadFilePath);
+// };
