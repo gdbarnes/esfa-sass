@@ -1,6 +1,5 @@
 git_ignored/
 node_modules/
 public/assets/
-public/downloads/
 .DS_Store
 .vscode
