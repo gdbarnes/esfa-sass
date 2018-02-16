@@ -13,8 +13,8 @@
   <main id="content">
     <h1 class="heading-large">ESFA HTML generator</h1>
     <hr />
-    <p>This app will generate the necessary assets and provide consistent markup to be used in ESFA projects.</p>
-    <p>Once a CDN is available, this app will be used to generate the assets to be published.</p>
+    <p>This app will generate the necessary assets and provide consistent markup to be used in ESFA projects. These can then
+      be downloaded and used locally in a project or (when available) linked to from a CDN.</p>
     <p>It uses the npm packages listed below locally and compares their version numbers with the relevant GitHub repositories.</p>
     <ul class="npm-packages js-npm-packages"></ul>
     <div class="generator-options">
@@ -49,9 +49,10 @@
       </div>
     </div>
     <button type="button" class="button button-start js-compile-sass">Generate files and markup</button>
-    <button type="button" class="button button-start js-create-zip">Create zip</button>
+    <button type="button" class="button button-start js-create-zip">Create assets archive</button>
 
     <h3 class="heading-small js-compile-successful"></h3>
+    <div class="js-zip-successful"></div>
     <div class="js-esfa-markup"></div>
   </main>
 

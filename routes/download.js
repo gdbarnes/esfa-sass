@@ -3,13 +3,12 @@ const archiver = require('archiver');
 const path = require('path');
 const h = require('./../helpers');
 
+const downloadFilePath = path.join(__dirname, '..', '/public/downloads/assets.zip');
 exports.zip = (req, res) => {
   console.log('\nCreating zip... 🗜\n');
-  const output = fs.createWriteStream(
-    path.join(__dirname, '..', '/public/downloads/esfa-govuk-assets.zip')
-  );
+  const output = fs.createWriteStream(downloadFilePath);
   const archive = archiver('zip', {
-    zlib: { level: 9 } // Sets the compression level.
+    zlib: { level: 9 }
   });
 
   output.on('close', function() {
@@ -22,9 +21,8 @@ exports.zip = (req, res) => {
 
   archive.on('warning', function(err) {
     if (err.code === 'ENOENT') {
-      // log warning
+      console.warn(err);
     } else {
-      // throw error
       throw err;
     }
   });
@@ -33,12 +31,6 @@ exports.zip = (req, res) => {
     res.status(500).send({ error: err.message });
   });
 
-  //on stream closed we can end the request
-  // archive.on('end', function() {
-  //   console.log('Archive wrote %d bytes', archive.pointer());
-  // });
-
-  //this is the streaming magic
   archive.pipe(output);
 
   const directory = path.join(__dirname, '..', '/public/assets/');
@@ -50,10 +42,5 @@ exports.zip = (req, res) => {
 
 exports.download = (req, res) => {
   console.log('Downloading');
-  const file = path.join(
-    __dirname,
-    '..',
-    '/public/downloads/esfa-govuk-assets.zip'
-  );
-  res.download(file);
+  res.download(downloadFilePath);
 };
