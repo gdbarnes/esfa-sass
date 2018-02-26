@@ -61,7 +61,7 @@ const minifyCss = () => {
         title: 'Minified css: '
       })
     )
-    .pipe(gulp.dest(config.outputDir + '/stylesheets/minified'));
+    .pipe(gulp.dest(config.outputDir + '/stylesheets'));
   // .pipe(notify({ message: 'CSS FILES MINIFIED 🗜' }));
 };
 

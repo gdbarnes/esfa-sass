@@ -68,7 +68,7 @@ class compileSass {
     const data = {
       cdnUrl: chosenPath === 'cdn' ? this.cdnUrl : '',
       paths: {
-        styles: minifiedStyles ? '/assets/stylesheets/minified/' : '/assets/stylesheets/',
+        styles: '/assets/stylesheets/',
         scripts: '/assets/javascripts/',
         images: '/assets/images/'
       },
