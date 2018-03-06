@@ -10,6 +10,7 @@ const rename = require('gulp-rename');
 const config = {
   srcSass: './assets/sass/**/*.scss',
   srcTemplate: './node_modules/govuk_template_jinja/assets/**/*',
+  srcToolkitImages: './node_modules/govuk_frontend_toolkit/images/**/*',
   outputDir: './public/assets'
 };
 
@@ -49,6 +50,18 @@ const copyTemplateAssets = () => {
     .pipe(gulp.dest(config.outputDir));
 };
 
+const copyToolkitImages = () => {
+  return gulp
+    .src(config.srcToolkitImages)
+    .pipe(
+      size({
+        showFiles: false,
+        title: 'Toolkit images:'
+      })
+    )
+    .pipe(gulp.dest(config.outputDir + '/stylesheets'));
+};
+
 const minifyCss = () => {
   return gulp
     .src(config.outputDir + '/stylesheets/*.css')
@@ -67,9 +80,11 @@ const minifyCss = () => {
     .pipe(gulp.dest(config.outputDir + '/stylesheets'));
 };
 
-gulp.task('compileSass', compileSass);
+// do one thing at a time to avoid races
 gulp.task('emptyAssetsDir', emptyAssetsDir);
-gulp.task('copyTemplateAssets', ['compileSass', 'emptyAssetsDir'], copyTemplateAssets); // wait for emptyAssetsDir & compileSass to finish
-gulp.task('minifyCss', ['copyTemplateAssets'], minifyCss); // wait for copyTemplateAssets to finish
+gulp.task('compileSass', ['emptyAssetsDir'], compileSass);
+gulp.task('copyToolkitImages', ['compileSass'], copyToolkitImages);
+gulp.task('copyTemplateAssets', ['copyToolkitImages'], copyTemplateAssets);
+gulp.task('minifyCss', ['copyTemplateAssets'], minifyCss);
 
 gulp.task('default', ['minifyCss']);
