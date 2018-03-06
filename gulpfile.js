@@ -59,7 +59,7 @@ const copyToolkitImages = () => {
         title: 'Toolkit images:'
       })
     )
-    .pipe(gulp.dest(config.outputDir + '/stylesheets'));
+    .pipe(gulp.dest(config.outputDir + '/images'));
 };
 
 const minifyCss = () => {
